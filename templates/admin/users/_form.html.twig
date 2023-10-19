@@ -1,0 +1,21 @@
+{{ form_start(userForm) }}
+<div class="container" style="max-width: 750px;">
+	<div class="d-flex mx-2 my-3">
+		{{ form_widget(userForm.firstname) }}
+		{{ form_widget(userForm.lastname) }}
+	</div>
+	<div class="mx-2 my-3">
+		{{ form_widget(userForm.email) }}
+	</div>
+	<div class="mx-2 my-3">
+		{{ form_widget(userForm.address) }}
+	</div>
+	<div class="d-flex mx-2 my-3">
+		{{ form_widget(userForm.zipcode) }}
+		{{ form_widget(userForm.city) }}
+	</div>
+	<div class="d-flex justify-content-end">
+		<button type="submit" class="btn btn-outline-success">{{ button_label|default('Ajouter') }}</button>
+	</div>
+</div>
+{{ form_end(userForm) }}

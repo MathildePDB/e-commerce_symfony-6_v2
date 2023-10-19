@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier un utilisateur{% endblock %}
+
+{% block body %}
+    {% include "modals/delete.html.twig" %}
+    <div class="container-fluid mb-5">
+        <div class="row">
+            {% include "_partials/_adminnav.html.twig" %}
+            <main class="col-md-9" style="max-width: 800px;">
+                <h1 class="m-5">Modifier l'utilisateur</h1>
+                {% include "admin/users/_form.html.twig" with {'button_label' : 'Modifier'} %}
+                <div class="container" style="max-width: 750px;">
+                    <a href="javascript:void(0)" class="btn btn-outline-secondary me-5 ms-2" onClick="history.back()">Annuler</a>
+                    {# <a href="{{ path('admin_users_delete', {id:user.id}) }}" class="btn btn-outline-danger delete-button" data-id="{{ user.id }}">Supprimer</a> #}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

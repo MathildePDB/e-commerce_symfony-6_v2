@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block body %}
+    {% include "modals/delete.html.twig" %}
+    <div class="container-fluid mb-5 pb-5">
+        <div class="row">
+            {% include "_partials/_adminnav.html.twig" %}
+            <main class="col-9 p-2">
+                <h1 class="mb-5">Produits</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <th>Stock</th>
+                            <th>Catégorie</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>{{ product.id }}</td>
+                                <td>
+                                    {% if product.images|length > 0 %}
+										<img src="{{ asset('assets/uploads/products/') ~ product.images[0].name }}" class="card-img-top grow-on-hover" alt="{{ product.name }}" style="width: 75px;">
+									{% else %}
+										<img src="{{ asset('assets/uploads/noPicture.png') }}" class="card-img-top grow-on-hover" alt="{{ product.name }}" style="width: 75px;">
+									{% endif %}
+                                </td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.price / 100 }}</td>
+                                <td>{{ product.stock }}</td>
+                                <td>{{ product.categories.name }}</td>
+                                <td>
+                                    <a class="btn btn-outline-secondary" href="{{ path('admin_products_edit', {id: product.id}) }}">Modifier</a>
+                                    <a class="btn btn-outline-danger delete-button" href="{{ path('admin_products_delete', {id: product.id}) }}">supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% set path = 'admin_products_index' %}
+                {% set slug = '' %}
+                <div class="d-flex justify-content-center">
+                    {% include "_partials/_pagination.html.twig" %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

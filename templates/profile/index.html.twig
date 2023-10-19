@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!
+{% endblock %}
+
+{% block body %}
+	<main class="container mb-5 pb-5">
+		<h1 class="m-5">Mon compte</h1>
+		<div class="row">
+			<div class="col-sm-3 col-md-6 col-lg-12">
+				<div class="card m-3 p-5">
+					<h5>
+						{{ app.user.firstname ~ ' ' ~ app.user.lastname|upper }}</h5>
+					<h6>{{ app.user.email }}</h6>
+					<button class="btn btn-outline-secondary w-50">Modifier mon profil</button>
+				</div>
+				<div class="card m-3 p-5">
+					<h2 class="pb-5">Mes commandes</h2>
+					{% for order in orders %}
+						<div class="border rounded border-secondary-subtle p-5 m-2 row">
+							<div class="col-6">
+								<div class="d-flex align-items-center">
+									<h6 class="m-0 pe-5">
+										<strong>Numéro de commande :</strong>
+										{{ order.reference|upper }}</h6>
+									<p class="m-0">
+										<strong>Date :
+										</strong>
+										{{ order.createdat|date("d-m-Y")}}</p>
+								</div>
+								<p>
+									<strong>Adresse de facturation :
+									</strong><br>
+									{{ order.users.firstname ~ ' ' ~ order.users.lastname|upper }}
+									<br>
+									{{ order.users.address }}
+									<br>
+									{{ order.users.zipcode ~ ' ' ~ order.users.city|upper }}
+								</p>
+								<div class="d-flex align-items-center">
+									<h6 class="m-0 pe-5">Total de la commande :
+										{{ ((total / 100)|number_format(2)) + 5.5 }}
+										€</h6>
+									<a class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('app_orders_detail', {id: order.id})}}">Détails de la commande</a>
+								</div>
+							</div>
+							<div class="col-5 text-end">
+								<p><i>Statut de la commande :</i></p>
+								{% if order.createdAt|date("Y-m-d") == 'now'|date("Y-m-d") %}
+									<span class="badge text-bg-secondary">En cours de livraison</span>
+								{% else %}
+									<span class="badge text-bg-success">Livrée</span>
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

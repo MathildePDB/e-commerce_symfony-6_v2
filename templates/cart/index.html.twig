@@ -1,0 +1,166 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mon panier
+{% endblock %}
+
+{% block body %}
+	{% include "modals/delete.html.twig" %}
+	<main class="container mb-5">
+		<h1 class="m-5">Mon panier</h1>
+		<div class="row d-flex justify-content-around">
+			<div class="col-md-8 p-2">
+				<div class="border rounded border-secondary-subtle p-5 d-none d-md-block">
+					{% if data %}
+						<div class="text-end pb-3">
+							<a href="{{ path('cart_empty') }}" class="link-danger link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover delete-button">Supprimer le panier</a>
+						</div>
+					{% endif %}
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Produit</th>
+									<th class="text-end">Prix</th>
+									<th class="text-end">Quantité</th>
+									<th class="text-end">Total</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for element in data %}
+									<tr>
+										<td class="">
+											<a class="d-flex align-items-center link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('products_details', {slug: element.product.slug})}}">
+												<img src="{{ asset('assets/uploads/products/mini/300x300-') ~ element.product.images[0].name }}" class="img-fluid d-block rounded-circle object-fit-none mx-2" alt="{{ element.product.name }}" style="width: 50px; height: 50px;">
+												{{ element.product.name|slice(0, 20) }}
+											</a>
+										</td>
+										<td class="text-end">{{ (element.product.price / 100)|number_format(2) }}
+											€</td>
+										<td class="text-end">
+											<a href="{{ path('cart_remove', {id: element.product.id}) }}" class="btn btn-outline-secondary me-1 px-2 py-0">-</a>
+											{{ element.quantity }}
+											<a href="{{ path('cart_add', {id: element.product.id}) }}" class="btn btn-outline-secondary ms-1 px-2 py-0">+</a>
+										</td>
+										<td class="text-end">{{ (element.quantity * element.product.price / 100)|number_format(2) }}
+											€</td>
+										<td>
+											<a href="{{ path('cart_delete', {id: element.product.id}) }}" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+												<small>Supprimer</small>
+											</a>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="5">Votre panier est vide</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					{% if data %}
+						<div class="d-flex justify-content-end align-items-center">
+							<h6 class="m-0 px-5">
+								<strong>Total du panier :
+									{{ (total / 100)|number_format(2) }}
+									€</strong>
+							</h6>
+						</div>
+					{% endif %}
+					{% if data %}
+						<div class="text-end mt-4">
+							<a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('app_orders_add') }}">Valider le panier</a>
+						</div>
+					{% endif %}
+				</div>
+				<div class="d-block d-sm-none border border-secondary-subtle rounded">
+					{% for element in data %}
+						<div class=" p-2 my-1">
+							<div class="d-flex align-items-center">
+								<a class="d-flex align-items-center link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('products_details', {slug: element.product.slug})}}">
+									<img src="{{ asset('assets/uploads/products/mini/300x300-') ~ element.product.images[0].name }}" class="img-fluid d-block rounded-circle object-fit-none mx-2" alt="{{ element.product.name }}" style="width: 50px; height: 50px;">
+									{{ element.product.name|slice(0, 35) }}...
+								</a>
+							</div>
+							<div class="d-flex justify-content-evenly">
+								<p>{{ (element.product.price / 100)|number_format(2) }}
+									€</p>
+								<div>
+									<a href="{{ path('cart_remove', {id: element.product.id}) }}" class="btn btn-outline-secondary me-1 px-2 py-0">-</a>
+									{{ element.quantity }}
+									<a href="{{ path('cart_add', {id: element.product.id}) }}" class="btn btn-outline-secondary ms-1 px-2 py-0">+</a>
+								</div>
+								<p>{{ (element.quantity * element.product.price / 100)|number_format(2) }}
+									€</p>
+								<a href="{{ path('cart_delete', {id: element.product.id}) }}" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+									<small>Supprimer</small>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+					{% if data %}
+						<div class="d-flex justify-content-end align-items-center py-3">
+							<h6 class="m-0 px-4">
+								<strong>Total du panier :
+									{{ (total / 100)|number_format(2) }}
+									€</strong>
+							</h6>
+						</div>
+						<div class="p-3 d-flex justify-content-between">
+							<a href="{{ path('cart_empty') }}" class="link-danger link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Supprimer le panier</a>
+							<a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('app_orders_add') }}">Valider le panier</a>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-4 p-2">
+				<div class="border rounded border-secondary-subtle p-5">
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Récapitulatif de votre commande</th>
+							</tr>
+						</thead>
+						{% if data %}
+							<tbody>
+								{% for element in data %}
+									<tr>
+										<td>{{ element.quantity ~ ' - ' ~ element.product.name ~ ' - ' ~ (element.quantity * element.product.price / 100)|number_format(2) }}
+											€</td>
+									</tr>
+								{% endfor %}
+								<tr>
+									<td>Frais de port - 5.50€</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td class="text-end">
+										<strong>Montant total :
+											{{ ((total / 100) + 5.50)|number_format(2) }}
+											€</strong>
+									</td>
+								</tr>
+							</tfoot>
+						{% else %}
+							<tfoot>
+								<tr>
+									<td>Vous n'avez rien commandé pour le moment</td>
+								</tr>
+							</tfoot>
+						{% endif %}
+					</table>
+					{% if data %}
+						<div class="d-grid gap-2">
+							<a class="btn btn-outline-success" href="{{ path('app_orders_add') }}">Valider la commande</a>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier un produit{% endblock %}
+
+{% block body %}
+	{% include "modals/delete.html.twig" %}
+	<div class="container-fluid mb-5">
+		<div class="row">
+		{% include "_partials/_adminnav.html.twig" %}
+			<main class="col-md-9 p-2" style="max-width: 800px;">
+				<h1 class="m-5">Modifier le produit</h1>
+				{% include "admin/products/_form.html.twig" with {'button_label': 'Modifier'} %}
+				<div class="container"  style="max-width: 750px;">
+					<a class="btn btn-outline-secondary me-5 ms-2" href="javascript:void(0)" onClick="history.back()">Annuler</a>
+					<a class="btn btn-outline-danger delete-button" href="{{ path('admin_products_delete', {id: product.id}) }}" data-id="{{ product.id }}">supprimer le produit</a>
+				</div>
+			</main>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('assets/js/images.js') }}" defer></script>
+	<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

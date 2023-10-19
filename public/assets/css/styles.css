@@ -1,0 +1,14 @@
+/* HEADER */
+/* nav decoration */
+.nav-divider {
+    border-top: 1px solid #ccc; /* Couleur et style de la barre de séparation */
+    margin: 0.5rem 0; /* Espacement optionnel au-dessus et en dessous de la barre de séparation */
+}
+/* CARDS */
+.grow-on-hover {
+    transition: transform 0.2s;
+}
+
+.grow-on-hover:hover {
+    transform: scale(1.05);
+}

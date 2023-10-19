@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Administration
+{% endblock %}
+
+{% block body %}
+	{% include "modals/delete.html.twig" %}
+	<div class="container-fluid mb-5">
+		<div class="row">
+			{% include "_partials/_adminnav.html.twig" %}
+			<main class="col-9 p-2">
+				<h1 class="m-5">Administration</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Prénom</th>
+							<th>Nom</th>
+							<th>E-mail</th>
+							<th>Rôles</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+							<tr>
+								<td>{{ user.id }}</td>
+								<td>{{ user.firstname }}</td>
+								<td>{{ user.lastname }}</td>
+								<td>{{ user.email }}</td>
+								<td>
+									{% for role in user.roles %}
+										{% if role == 'ROLE_ADMIN' %}
+                                            administrateur
+                                        {% elseif role == 'ROLE_PRODUCT_ADMIN' %}
+                                            admin produit
+                                        {% elseif role == 'ROLE_USER' %}
+                                            utilisateur
+                                        {% else %}
+                                            {{ role }}
+                                        {% endif %}
+										{% if not loop.last %},
+										{% endif %}
+									{% endfor %}
+								</td>
+                                <td>
+                                <a class="btn btn-outline-success" href="{{ path('admin_users_details', {id: user.id}) }}">Voir le détail</a>
+                                <a class="btn btn-outline-secondary" href="{{ path('admin_users_edit', {id: user.id}) }}">Modifier</a>
+                                <button class="btn btn-outline-danger delete-button" href="{{ path('admin_users_delete', {id: user.id}) }}">Supprimer</button>
+                                </td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+                {% set path = 'admin_users_index' %}
+                {% set slug = '' %}
+                <div class="d-flex justify-content-center">
+                    {% include "_partials/_pagination.html.twig" %}
+                </div>
+			</main>
+		</div>
+	</div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

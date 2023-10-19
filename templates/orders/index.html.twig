@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandes
+{% endblock %}
+
+{% block body %}
+	<main class="container mb-5">
+		<h1 class="m-5">Mes commandes</h1>
+		{% for order in orders %}
+			<div class="border rounded border-secondary-subtle p-5 m-2 row">
+				<div class="col-6">
+					<h6>
+						<strong>Numéro de commande :</strong>
+						{{ order.reference|upper }}</h6>
+					<p>
+						<strong>Date :
+						</strong>
+						{{ order.createdat|date("d-m-Y")}}</p>
+					<p>
+						<strong>Adresse de facturation :
+						</strong><br>
+						{{ order.users.firstname ~ ' ' ~ order.users.lastname|upper }}
+						<br>
+						{{ order.users.address }}
+						<br>
+						{{ order.users.zipcode ~ ' ' ~ order.users.city|upper }}
+					</p>
+					<h6>Total de la commande :
+						{{ ((total / 100)|number_format(2)) + 5.5 }}
+						€</h6>
+					<a class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ path('app_orders_detail', {id: order.id})}}">Détails</a>
+				</div>
+				<div class="col-5 text-end">
+					<p>
+						<i>Statut de la commande :</i>
+					</p>
+					{% if order.createdAt|date("Y-m-d") == 'now'|date("Y-m-d") %}
+						<span class="badge text-bg-secondary">En cours de livraison</span>
+					{% else %}
+						<span class="badge text-bg-success">Livrée</span>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	</main>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des produits
+{% endblock %}
+
+{% block body %}
+	{% include "modals/cart.html.twig" %}
+	<main class="container mb-5 pb-5">
+		<h1 class="m-5">Tous les produits</h1>
+		{% if products %}
+			<div class="row">
+				{% for product in products.data %}
+					<div class="col-md-4">
+						<div class="card m-3" style="height: 550px;">
+							<a class="text-decoration-none nav-link" href="{{ path('products_details', {"slug": product.slug }) }}">
+								<div class="d-flex align-items-center justify-content-center" style="height: 300px; overflow: hidden;">
+									{% if product.images|length > 0 %}
+										<img src="{{ asset('assets/uploads/products/') ~ product.images[0].name }}" class="card-img-top grow-on-hover" alt="{{ product.name }}">
+									{% else %}
+										<img src="{{ asset('assets/uploads/noPicture.png') }}" class="card-img-top grow-on-hover" alt="{{ product.name }}">
+									{% endif %}
+								</div>
+								<div class="card-body m-2">
+									<h4 class="" style="text-decoration: none;">{{ product.name }}</h4>
+									<h5 class="card-text mt-3">{{ (product.price / 100)|number_format(2) }}
+										€</h5>
+								</div>
+							</a>
+							<div class="card-body d-flex align-items-end m-2">
+								{% if product.stock > 0 %}
+									<a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-outline-success px-4 w-100 cart-button">Ajouter au panier</a>
+								{% else %}
+									<p class="text-danger">Temporairement en rupture de stock</p>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{% set path = 'products_index' %}
+			{% set slug = null %}
+			{% set pages = products.pages %}
+			{% set currentPage = products.page %}
+			{% include "_partials/_pagination.html.twig" %}
+		{% else %}
+			<p>Aucun produit n'a été ajouté à la boutique pour le moment.</p>
+		{% endif %}
+	</main>
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('assets/js/cart.js') }}"></script>
+{% endblock %}

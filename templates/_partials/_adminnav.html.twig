@@ -1,0 +1,30 @@
+<aside class="col-md-3 p-2 p-5">
+    <div class="card my-2">
+        <div class="card-header">
+            Catégories
+        </div>
+        <div class="card-body list-group mx-3">
+            <a class="nav-link list-group-item-action dropdown-item my-1 px-2" href="{{ path('admin_categories_index') }}">Liste des catégories</a>
+            <a class="nav-link list-group-item-action dropdown-item my-1 px-2" href="{{ path('admin_categories_add') }}">Ajouter une catégorie</a>      
+        </div>
+    </div>
+    <div class="card my-2">
+        <div class="card-header">
+            Produits
+        </div>
+        <div class="card-body list-group mx-3">
+            <a class="nav-link list-group-item-action dropdown-item my-1 px-2" href="{{ path('admin_products_index') }}">Liste des produits</a>
+            <a class="nav-link list-group-item-action dropdown-item my-1 px-2" href="{{ path('admin_products_add') }}">Ajouter un produit</a>      
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="card my-2">
+        <div class="card-header">
+            Utilisateurs
+        </div>
+        <div class="card-body list-group mx-3">
+            <a class="nav-link list-group-item-action dropdown-item my-1 px-2" href="{{ path('admin_users_index') }}">Liste des utilisateurs</a>
+        </div>
+    </div>
+    {% endif %}
+</aside>

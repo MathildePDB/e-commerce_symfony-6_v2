@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice {
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        .invoice-details {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .invoice-details p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tfoot {
+            font-weight: bold;
+        }
+         .product-column {
+            width: 50%; /* Ajustez la largeur selon vos besoins */
+        }
+        .total-column {
+            width: 20%; /* Ajustez la largeur selon vos besoins */
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <div class="header">
+            <h1>Facture</h1>
+        </div>
+        <div class="invoice-details">
+            <p>
+                <strong>Référence de la commande :</strong>
+                {{ order.reference|upper }}
+            </p>
+            <p>
+                <strong>Date :</strong>
+                {{ order.createdat|date("d-m-Y") }}
+            </p>
+            <p>
+                <strong>Adresse de facturation :</strong><br>
+                {{ order.users.firstname ~ ' ' ~ order.users.lastname }}<br>
+                {{ order.users.address }}<br>
+                {{ order.users.zipcode ~ ' ' ~ order.users.city }}
+            </p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in orderDetails %}
+                    <tr>
+                        <td class="product-column">{{ item.products.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ (item.price / 100)|number_format(2) }} €</td>
+                        <td class="total-column">{{ item.quantity * ((item.price / 100)|number_format(2)) }} €</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3">Frais de port</td>
+                    <td>5.50 €</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">Total de la commande :</th>
+                    <th>{{ ((total / 100)|number_format(2)) + 5.50 }} €</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ user.firstname ~ ' ' ~ user.lastname}}
+{% endblock %}
+
+{% block body %}
+{% include "modals/delete.html.twig" %}
+	<main class="container mb-5">
+		<h1 class="m-5">Détails de l'utilisateur</h1>
+		<div class="row">
+			<div class="border rounded p-5 d-flex align-items-end">
+				<div class="col-md-6 p-5">
+					<h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+					<h5 class="my-4">Email :
+						{{ user.email }}</h5>
+					<p>Rôles :
+						{% for role in user.roles %}
+							{% if role == 'ROLE_ADMIN' %}
+								administrateur
+							{% elseif role == 'ROLE_PRODUCT_ADMIN' %}
+								admin produit
+							{% elseif role == 'ROLE_USER' %}
+								utilisateur
+							{% else %}
+								{{ role }}
+							{% endif %}
+							{% if not loop.last %}-
+							{% endif %}
+						{% endfor %}
+					</p>
+                    <a class="btn btn-outline-secondary me-2" href="{{ path('admin_users_edit', {id: user.id}) }}">Modifier</a>
+                    <button class="btn btn-outline-danger delete-button" href="{{ path('admin_users_delete', {id: user.id}) }}">Supprimer</button>
+				</div>
+				<div class="col-md-6 p-5">
+					{% if user.isVerified %}
+						<span class="badge text-bg-secondary p-2 my-5">utilisateur vérifié</span>
+					{% endif %}
+					<p>Adresse : {{ user.address ~ ' - ' ~ user.zipcode ~ ' ' ~ user.city }}</p>
+					<p>Compte créé le {{ user.createdat|date("m/d/Y") }}</p>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

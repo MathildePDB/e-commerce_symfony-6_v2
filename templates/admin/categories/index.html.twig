@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des catégories
+{% endblock %}
+
+{% block body %}
+	{% include "modals/delete.html.twig" %}
+	<div class="container-fluid mb-5">
+		<div class="row">
+			{% include "_partials/_adminnav.html.twig" %}
+			<main class="col-9 p-2">
+				<h1 class="m-5">Catégories</h1>
+				<table class="table ">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nom</th>
+							<th>Parent</th>
+							<th>Slug</th>
+							<th>Ordre</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for category in categories %}
+							<tr>
+								<td>{{ category.id }}</td>
+								<td>
+									{% if category.parent == null %}
+										<strong>{{ category.name }}</strong>
+									{% else %}
+										{{ category.name }}
+									{% endif %}
+								</td>
+								<td>{{ category.parent is not null ? category.parent.name : "" }}</td>
+								<td>{{ category.slug }}</td>
+								<td>{{ category.categoryOrder }}</td>
+								<td>
+									<a class="btn btn-outline-secondary" href="{{ path('admin_categories_edit', {id: category.id}) }}">Modifier</a>
+									<a class="btn btn-outline-danger delete-button" href="{{ path('admin_categories_delete', {id: category.id}) }}" data-id="{{ category.id }}">Supprimer</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+                {% set path = 'admin_categories_index' %}
+	            {% set slug = '' %}
+                <div class="d-flex justify-content-center ">
+                    {% include "_partials/_pagination.html.twig" %}
+                </div> 
+			</main>
+		</div>
+	</div>
+	
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/delete.js') }}"></script>
+{% endblock %}

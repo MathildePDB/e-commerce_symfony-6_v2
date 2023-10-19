@@ -1,0 +1,4 @@
+<h1>Confirmation de votre commande</h1>
+<p>Bonjour {{ user.firstname }},</p>
+<p>Votre commande a bien été prise en compte. Vous pouvez voir votre facture en cliquant sur le lien ci-dessous :</p>
+<p><a href="{{ absolute_url(path('app_orders_detail', {id: order.id})) }}">Voir ma commande</a></p>
