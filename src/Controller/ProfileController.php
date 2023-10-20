@@ -36,11 +36,11 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/commande', name: 'orders')]
-    public function orders(): Response
-    {
-        return $this->render('profile/index.html.twig', [
-            'controller_name' => 'User\'s orders',
-        ]);
-    }
+    // #[Route('/commande', name: 'orders')]
+    // public function orders(): Response
+    // {
+    //     return $this->render('profile/index.html.twig', [
+    //         'controller_name' => 'User\'s orders',
+    //     ]);
+    // }
 }
