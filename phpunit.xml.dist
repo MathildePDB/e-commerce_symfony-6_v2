@@ -16,6 +16,7 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <server name="XDEBUG_MODE" value="coverage" />
+        <server name="PANTHER_NO_SANDBOX" value="1" />
     </php>
 
     <testsuites>

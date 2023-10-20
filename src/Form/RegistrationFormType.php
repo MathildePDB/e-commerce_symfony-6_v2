@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'row_attr' => [
                     'class' => 'form-group-row'
-                ]      
+                ]    
             ])
             ->add('lastname', TextType::class, [
                 'attr' => [
