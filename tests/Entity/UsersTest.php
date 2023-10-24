@@ -10,7 +10,7 @@ class UsersTest extends TestCase
     public function testCreateUser()
     {
         $user = new Users();
-        $user->setEmail('user@email.com');
+        $user->setEmail('usertest@email.com');
         $user->setRoles(["ROLE_USER"]);
         $user->setPassword('azerty');
         $user->setLastname('lastname');
@@ -19,7 +19,7 @@ class UsersTest extends TestCase
         $user->setZipcode('12345');
         $user->setCity('city');
 
-        $this->assertSame('user@email.com', $user->getEmail());
+        $this->assertSame('usertest@email.com', $user->getEmail());
         $this->assertSame(["ROLE_USER"], $user->getRoles());
         $this->assertSame('azerty', $user->getPassword());
         $this->assertSame('lastname', $user->getLastname());

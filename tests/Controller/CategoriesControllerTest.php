@@ -10,8 +10,7 @@ class CategoriesControllerTest extends WebTestCase
     {
         // test de l'accès à la page des categories
         $client = static::createClient();
-        $crawler = $client->request('GET', '/categories/Arbustes');
-
+        $crawler = $client->request('GET', '/categories/categorie-2');
         $this->assertResponseIsSuccessful();
     }
 

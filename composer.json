@@ -13,6 +13,8 @@
         "doctrine/orm": "^2.16",
         "dompdf/dompdf": "^2.0",
         "fakerphp/faker": "^1.21",
+        "firebase/php-jwt": "^6.9",
+        "lexik/jwt-authentication-bundle": "^2.19",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
         "sensio/framework-extra-bundle": "^6.1",
@@ -95,6 +97,8 @@
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^7.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phpunit/phpunit": "^9",
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",

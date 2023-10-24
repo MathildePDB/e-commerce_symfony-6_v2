@@ -11,19 +11,19 @@ class OrdersControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/login');
 
         $form = $crawler->selectButton('Me connecter')->form();
-        $form['email'] = 'HaiducBanks@teleworm.us';
-        $form['password'] = 'eCh9ohrai3ah';
+        $form['email'] = 'user@email.com';
+        $form['password'] = 'azerty';
 
         $client->submit($form);
         $client->followRedirects();
     }
-    
+
     public function testIndex(): void
     {
         // test de l'accès à la page des commandes
         $client = static::createClient();
         $this->login($client);
-        
+     
         $crawler = $client->request('GET', '/commandes');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -47,11 +47,9 @@ class OrdersControllerTest extends WebTestCase
         $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/commandes/10');
+        $crawler = $client->request('GET', '/commandes/33');
 
         // $this->assertResponseIsSuccessful();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-
-
 }

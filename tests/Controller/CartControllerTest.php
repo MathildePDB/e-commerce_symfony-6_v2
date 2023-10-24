@@ -23,7 +23,7 @@ class CartControllerTest extends WebTestCase
     {
         // test d'ajout d'un produit au panier
         $client = static::createClient();
-        $crawler = $client->request('GET', '/cart/add/30');
+        $crawler = $client->request('GET', '/cart/add/105');
 
         $client->followRedirect();
 
@@ -34,7 +34,7 @@ class CartControllerTest extends WebTestCase
     {
         // test de suppression d'un produit du panier
         $client = static::createClient();
-        $crawler = $client->request('GET', '/cart/remove/30');
+        $crawler = $client->request('GET', '/cart/remove/105');
 
         $client->followRedirect();
 
@@ -45,7 +45,7 @@ class CartControllerTest extends WebTestCase
     {
         // test de suppression de tous les produits ayant le même id dans le panier
         $client = static::createClient();
-        $crawler = $client->request('GET', '/cart/delete/30');
+        $crawler = $client->request('GET', '/cart/delete/105');
 
         $client->followRedirect();
 

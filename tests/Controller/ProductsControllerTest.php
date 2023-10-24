@@ -19,7 +19,7 @@ class ProductsControllerTest extends WebTestCase
     {
         // test de l'accès à la page des produits
         $client = static::createClient();
-        $client->request('GET', '/produits/Erable-du-Japon');
+        $client->request('GET', '/produits/product');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

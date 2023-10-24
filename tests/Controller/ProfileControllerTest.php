@@ -11,8 +11,8 @@ class ProfileControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/login');
 
         $form = $crawler->selectButton('Me connecter')->form();
-        $form['email'] = 'HaiducBanks@teleworm.us';
-        $form['password'] = 'eCh9ohrai3ah';
+        $form['email'] = 'user@email.com';
+        $form['password'] = 'azerty';
 
         $client->submit($form);
         $client->followRedirects();
@@ -23,7 +23,7 @@ class ProfileControllerTest extends WebTestCase
         // test de l'accès à la page de profil
         $client = static::createClient();
         $this->login($client);
-        
+     
         $crawler = $client->request('GET', '/profile');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

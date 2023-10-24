@@ -11,8 +11,8 @@ class PdfControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/login');
 
         $form = $crawler->selectButton('Me connecter')->form();
-        $form['email'] = 'HaiducBanks@teleworm.us';
-        $form['password'] = 'eCh9ohrai3ah';
+        $form['email'] = 'user@email.com';
+        $form['password'] = 'azerty';
 
         $client->submit($form);
         $client->followRedirects();
@@ -23,10 +23,9 @@ class PdfControllerTest extends WebTestCase
         // test de la génération du pdf de la commande
         $client = static::createClient();
         $this->login($client);
-        
-        $crawler = $client->request('GET', '/pdf/commande/10');
+     
+        $crawler = $client->request('GET', '/pdf/commande/33');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-
 }

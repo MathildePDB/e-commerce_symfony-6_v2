@@ -4,6 +4,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Categories;
 use App\Entity\Products;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class ProductsTest extends TestCase
@@ -17,6 +18,8 @@ class ProductsTest extends TestCase
         $product->setDescription('description');
         $product->setPrice(10);
         $product->setStock(20);
+        $date = new DateTimeImmutable('2020-10-20');
+        $product->setCreatedAt($date);
         $product->setSlug('name');
         
 
@@ -25,6 +28,7 @@ class ProductsTest extends TestCase
         $this->assertSame('description', $product->getDescription());
         $this->assertSame(10, $product->getPrice());
         $this->assertSame(20, $product->getStock());
+        $this->assertSame($date, $product->getCreatedAt());
         $this->assertSame('name', $product->getSlug());
 
     }
